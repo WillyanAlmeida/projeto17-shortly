@@ -6,16 +6,16 @@ import jwt from 'jsonwebtoken';
 export async function signup(req, res) {
     const { name, email } = req.body
     console.log(req.body)
-if(req.body.password != req.body.confirmPassword)
+if(req.body.password != req.body.confirmPassword) return res.status(409).send("senha não confere");
     try {
         const user = await db.query(`SELECT * FROM users WHERE email=$1`, [email]);
         if (user.rows.length > 0) return res.status(409).send("E-mail de usuário ja cadastrado!");
 
         const passwordHashed = bcrypt.hashSync(req.body.password, 10);
         delete req.body.password;
-        const cad = await db.query(`INSERT INTO users ( name, email, password, ) VALUES
+        const cad = await db.query(`INSERT INTO users ( name, email, password ) VALUES
         ($1, $2, $3)`, [name, email, passwordHashed]);
-        res.status(201).send(cad);
+        res.sendStatus(201);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

@@ -21,10 +21,10 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: public.shortly; Type: TABLE; Schema: public; Owner: -
+-- Name: shortly; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public."public.shortly" (
+CREATE TABLE public.shortly (
     id integer NOT NULL,
     url character(1) NOT NULL,
     "shortUrl" text NOT NULL,
@@ -51,14 +51,14 @@ CREATE SEQUENCE public."public.shortly_id_seq"
 -- Name: public.shortly_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public."public.shortly_id_seq" OWNED BY public."public.shortly".id;
+ALTER SEQUENCE public."public.shortly_id_seq" OWNED BY public.shortly.id;
 
 
 --
--- Name: public.users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public."public.users" (
+CREATE TABLE public.users (
     id integer NOT NULL,
     name text NOT NULL,
     email text NOT NULL,
@@ -84,31 +84,31 @@ CREATE SEQUENCE public."public.users_id_seq"
 -- Name: public.users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public."public.users_id_seq" OWNED BY public."public.users".id;
+ALTER SEQUENCE public."public.users_id_seq" OWNED BY public.users.id;
 
 
 --
--- Name: public.shortly id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: shortly id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public."public.shortly" ALTER COLUMN id SET DEFAULT nextval('public."public.shortly_id_seq"'::regclass);
-
-
---
--- Name: public.users id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public."public.users" ALTER COLUMN id SET DEFAULT nextval('public."public.users_id_seq"'::regclass);
+ALTER TABLE ONLY public.shortly ALTER COLUMN id SET DEFAULT nextval('public."public.shortly_id_seq"'::regclass);
 
 
 --
--- Data for Name: public.shortly; Type: TABLE DATA; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public."public.users_id_seq"'::regclass);
+
+
+--
+-- Data for Name: shortly; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
 
 --
--- Data for Name: public.users; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
@@ -128,35 +128,35 @@ SELECT pg_catalog.setval('public."public.users_id_seq"', 1, false);
 
 
 --
--- Name: public.users public.users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users public.users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public."public.users"
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT "public.users_email_key" UNIQUE (email);
 
 
 --
--- Name: public.shortly shortly_pk; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shortly shortly_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public."public.shortly"
+ALTER TABLE ONLY public.shortly
     ADD CONSTRAINT shortly_pk PRIMARY KEY (id);
 
 
 --
--- Name: public.users users_pk; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public."public.users"
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pk PRIMARY KEY (id);
 
 
 --
--- Name: public.shortly shortly_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: shortly shortly_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public."public.shortly"
-    ADD CONSTRAINT shortly_fk0 FOREIGN KEY ("createdBy") REFERENCES public."public.users"(id);
+ALTER TABLE ONLY public.shortly
+    ADD CONSTRAINT shortly_fk0 FOREIGN KEY ("createdBy") REFERENCES public.users(id);
 
 
 --
