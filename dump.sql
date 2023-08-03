@@ -28,7 +28,7 @@ CREATE TABLE public."public.shortly" (
     id integer NOT NULL,
     url character(1) NOT NULL,
     "shortUrl" text NOT NULL,
-    "createdAt" timestamp without time zone NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
     "createdBy" integer NOT NULL,
     "visitCount" integer NOT NULL
 );
@@ -62,7 +62,8 @@ CREATE TABLE public."public.users" (
     id integer NOT NULL,
     name text NOT NULL,
     email text NOT NULL,
-    password text NOT NULL
+    password text NOT NULL,
+    "createdAt" timestamp with time zone
 );
 
 
