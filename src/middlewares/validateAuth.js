@@ -1,5 +1,5 @@
 import { db } from '../database/databaseconnections.js';
-import { ObjectId } from 'mongodb';
+
 import jwt from 'jsonwebtoken';
 
 
@@ -16,10 +16,10 @@ export async function validateAuth(req, res, next) {
 
     try {
         const { userId } = jwt.verify(token, chaveSecreta);
-        let session = await db.collection('users').findOne(new ObjectId(userId));
+        let session = await db.query(`SELECT * FROM users WHERE id=$1`, [userId]);
 
         if (!session) return res.sendStatus(401);
-        const sessionInfo = { user: { token, name: session.name, email: session.email, id: userId } }
+        const sessionInfo = {token }
 
         res.locals.session = sessionInfo;
         next()
