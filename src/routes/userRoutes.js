@@ -8,8 +8,8 @@ import { schemasignup, schemasignin } from "../schemas/userSchemas.js";
 const userRouter = Router()
 
 
-userRouter.post("/sign-up", validateSchema(schemasignup), signup);
-userRouter.post("/sign-in", validateSchema(schemasignin), signin);
+userRouter.post("/signup", validateSchema(schemasignup), signup);
+userRouter.post("/signin", validateSchema(schemasignin), signin);
 
 
 
