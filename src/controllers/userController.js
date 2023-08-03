@@ -37,7 +37,7 @@ export async function signin(req, res) {
 
 
         const dados = { userId: user.rows[0].id };
-        const chaveSecreta = process.env.JWT_SECRET;
+        const chaveSecreta = process.env.JWT_SECRET || "RAJuIUEUG8O7uPUNc0XKfjUjg8kSF3HkLwn";
 
         const token = jwt.sign(dados, chaveSecreta, { expiresIn: "1h" });
         console.log(token)
