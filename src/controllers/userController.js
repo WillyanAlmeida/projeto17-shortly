@@ -24,12 +24,13 @@ if(req.body.password != req.body.confirmPassword) return res.status(409).send("s
 
 export async function signin(req, res) {
     const { email, password } = req.body;
+    
 
     try {
         const user = await db.query(`SELECT * FROM users WHERE email=$1`, [email]);
-        console.log(user)
+        
         if (user.rows.length === 0) return res.status(404).send("Usuário e/ou senha incorretos!");
-        console.log(user)
+        
 
         const correctPassword = bcrypt.compareSync(password, user.rows[0].password);
         if (!correctPassword) return res.status(401).send("Usuário e/ou senha incorretos!");
