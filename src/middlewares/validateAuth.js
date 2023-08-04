@@ -19,9 +19,10 @@ export async function validateAuth(req, res, next) {
         let session = await db.query(`SELECT * FROM users WHERE id=$1`, [userId]);
 
         if (!session) return res.sendStatus(401);
-        const sessionInfo = {token }
+        const sessionInfo = userId 
 
         res.locals.session = sessionInfo;
+       
         next()
     } catch (err) {
         res.status(500).send(err.message)
