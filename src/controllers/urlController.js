@@ -15,7 +15,7 @@ export async function postUri(req, res) {
         res.status(201).send(newshortly.rows[0]);
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error.message);
     }
 }
 
@@ -33,7 +33,7 @@ export async function getUribyid(req, res) {
         res.status(200).send(shortlybyid.rows[0]);
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error.message);
     }
 }
 
@@ -46,11 +46,11 @@ export async function getUrl(req, res) {
         if (url.rows.length === 0) return res.sendStatus(404)
         const views = url.rows[0].visitCount + 1
 
-        await db.query(`UPDATE urls SET "visitCount" = $1 WHERE id = $2;`, [views, url.rows[0].id]);
+        await db.query(`UPDATE shortly SET "visitCount" = $1 WHERE id = $2;`, [views, url.rows[0].id]);
         res.redirect(url.rows[0].url);
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error.message);
     }
 }
 
