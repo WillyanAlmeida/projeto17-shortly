@@ -14,7 +14,8 @@ if(req.body.password != req.body.confirmPassword) return res.status(409).send("s
         const passwordHashed = bcrypt.hashSync(req.body.password, 10);
         delete req.body.password;
         const cad = await db.query(`INSERT INTO users ( name, email, password ) VALUES
-        ($1, $2, $3)`, [name, email, passwordHashed]);
+        ($1, $2, $3) RETURNING * `, [name, email, passwordHashed]);
+        
         res.sendStatus(201);
     } catch (error) {
         console.log(error);
@@ -29,7 +30,7 @@ export async function signin(req, res) {
     try {
         const user = await db.query(`SELECT * FROM users WHERE email=$1`, [email]);
         
-        if (user.rows.length === 0) return res.status(404).send("Usuário e/ou senha incorretos!");
+        if (user.rows.length === 0) return res.status(401).send("Usuário e/ou senha incorretos!");
         
 
         const correctPassword = bcrypt.compareSync(password, user.rows[0].password);
