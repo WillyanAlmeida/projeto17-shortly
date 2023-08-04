@@ -26,11 +26,11 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.shortly (
     id integer NOT NULL,
-    url character(1) NOT NULL,
+    url text NOT NULL,
     "shortUrl" text NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
     "createdBy" integer NOT NULL,
-    "visitCount" integer NOT NULL
+    "visitCount" integer DEFAULT 0 NOT NULL
 );
 
 
@@ -63,7 +63,7 @@ CREATE TABLE public.users (
     name text NOT NULL,
     email text NOT NULL,
     password text NOT NULL,
-    "createdAt" timestamp with time zone
+    "createdAt" timestamp without time zone DEFAULT now()
 );
 
 
@@ -105,26 +105,38 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public."publi
 -- Data for Name: shortly; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.shortly VALUES (1, 'https://gooodle.com', 'b8HdJ4ajW2kMffbdPNskU', '2023-08-04 11:28:57.184777-03', 6, 0);
+INSERT INTO public.shortly VALUES (2, 'https://gooogle.com', 'Nh-dKccek3X-Q4vhK4w_y', '2023-08-04 11:31:05.76252-03', 6, 0);
+INSERT INTO public.shortly VALUES (3, 'https://gooogle1.com', 'yRCf_jtiScnJAvxj1VbLG', '2023-08-04 11:34:07.622-03', 6, 0);
+INSERT INTO public.shortly VALUES (4, 'https://gooogle2.com', 'aCdfbs9INzQ-vCwnmuVSJ', '2023-08-04 11:37:03.191751-03', 6, 0);
+INSERT INTO public.shortly VALUES (5, 'https://gooogle3.com', 'T3kESUJNxhylEqMeppSaD', '2023-08-04 12:48:19.924201-03', 6, 0);
+INSERT INTO public.shortly VALUES (6, 'https://gooogle4.com', 'q3JGugsTrFbbzJI94D1oY', '2023-08-04 13:12:27.103732-03', 6, 0);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Benício Reis', 'Yango_Saraiva@hotmail.com', '$2b$10$vKYqnNkfh/UBgOR6QeR7ieSoFGDtIVHt3LJFV137GEsi4xLnlWHXO', NULL);
+INSERT INTO public.users VALUES (2, 'willyan', 'willyan@willyan.com.br', '$2b$10$XznCpc1FjkXd2OMBqZzTOel647.DjVf0gwTw/7PACB5FnBHI4n1GW', '2023-08-03 16:02:08.912136');
+INSERT INTO public.users VALUES (3, 'João Melo', 'Marli_Silva70@bol.com.br', '$2b$10$amHbuZghOTqZJrw.0XJctOV/SzxsTER8aQUvXKsqTBhLr9XPEU/ei', '2023-08-03 16:20:18.067598');
+INSERT INTO public.users VALUES (4, 'Srta. Heloísa Nogueira', 'Janana.Batista5@live.com', '$2b$10$y476XeNJVDeWA7aiylHfG.9To7Emt9C3mdkRneSe2p5P.s4iI7ptC', '2023-08-03 18:04:33.656422');
+INSERT INTO public.users VALUES (5, 'will', 'will@will.com', '$2b$10$viN7oROwtsztAXhH/iV49.9duMEM.UvYKOmKFmMAvJELwiAsVO4v2', '2023-08-04 09:23:53.967102');
+INSERT INTO public.users VALUES (6, 'willy', 'willy@willy.com', '$2b$10$pxYBzkcNoWM2//uqlghYiOqAsFGLLI7kh35sGKDVdVzWrZmIsCPzu', '2023-08-04 09:25:01.554649');
 
 
 --
 -- Name: public.shortly_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."public.shortly_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."public.shortly_id_seq"', 6, true);
 
 
 --
 -- Name: public.users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."public.users_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."public.users_id_seq"', 6, true);
 
 
 --
