@@ -11,8 +11,8 @@ export async function postUri(req, res) {
         const shortUrl = nanoid()
         const newshortly = await db.query(`INSERT INTO shortly ( url, "shortUrl", "createdBy"  ) VALUES
          ($1, $2, $3) RETURNING id, "shortUrl"`, [url, shortUrl, createdBy]);
-            
-         res.status(201).send( newshortly.rows[0]);
+
+        res.status(201).send(newshortly.rows[0]);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -25,12 +25,29 @@ export async function getUribyid(req, res) {
 
 
     try {
-        
-         const shortlybyid = await db.query(`SELECT id, "shortUrl", url FROM shortly WHERE id=$1  `, [id]);
 
-         if( shortlybyid.rows.length===0) return  res.sendStatus(404)
-            
-          res.status(200).send( shortlybyid.rows[0]);
+        const shortlybyid = await db.query(`SELECT id, "shortUrl", url FROM shortly WHERE id=$1  `, [id]);
+
+        if (shortlybyid.rows.length === 0) return res.sendStatus(404)
+
+        res.status(200).send(shortlybyid.rows[0]);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
+export async function getUrl(req, res) {
+    const { shortUrl } = req.params
+    console.log(req.params)
+
+
+    try {
+
+        const url = await db.query(`SELECT url FROM shortly WHERE "shortUrl"=$1  `, [shortUrl]);
+
+        if (url.rows.length === 0) return res.sendStatus(404)
+        res.redirect(url.rows[0].url);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
