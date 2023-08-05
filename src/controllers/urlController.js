@@ -69,4 +69,16 @@ export async function delUrl(req, res) {
     }
 
 }
-
+export async function getMyUrl(req, res) {
+    const createdBy = Number(res.locals.session)  
+    try {
+        const user = await db.query(`SELECT users.id, users.name, SUM("visitCount") AS "visitCount" FROM users JOIN shortly ON users.id = shortly."createdBy"  WHERE users.id=$1 GROUP BY users.id; `, [createdBy]);
+        const urls = await db.query(`SELECT id, url, "shortUrl", "visitCount" FROM shortly WHERE "createdBy" = $1; `, [createdBy]);
+       console.log(urls)
+       console.log(createdBy)
+        res.status(200).send({...user.rows[0], shortenedUrls: urls.rows});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+}
