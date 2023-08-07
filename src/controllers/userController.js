@@ -51,3 +51,21 @@ export async function signin(req, res) {
     }
 }
 
+export async function ranking(req, res) {
+    
+    try {
+        const user = await db.query(`SELECT users.id AS id, users.name AS name,
+        COUNT(shortly.id) AS "linksCount",
+        COALESCE(SUM(shortly."visitCount"), 0) AS "visitCount"
+        FROM users
+        LEFT JOIN shortly ON users.id = shortly."createdBy" 
+        GROUP BY users.id
+        ORDER BY "visitCount" DESC LIMIT 10;`);
+        
+        res.status(200).send({...user.rows});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+}
+
